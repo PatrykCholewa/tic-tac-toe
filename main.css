@@ -22,6 +22,19 @@ body{
 
 .game-cell{
     padding: 5px;
+    border: solid black 1px;
+}
+
+.game-cell-init{
+    background: azure;
+}
+
+.game-cell-player1{
+    background: brown;
+}
+
+.game-cell-player2{
+    background: aqua;
 }
 
 .game-row{
