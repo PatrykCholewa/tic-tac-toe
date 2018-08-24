@@ -1,4 +1,5 @@
 var player = 1;
+const winLength = 3;
 injectGame(3);
 
 function injectGame( size ){
@@ -10,7 +11,7 @@ function restart( size ){
     for( var i = 1 ; i <= size ; i++ ){
         for( var j = 1 ; j <= size ; j++ ){
             var cell = getCellIdByPosition( i , j );
-            cell.innerText = "X";
+            cell.innerText = " ";
         }
     }
 }
@@ -30,6 +31,42 @@ function handleCellClick( row , col , size ){
             player = 1;
         }
     }
+
+    document.getElementById("preamble").innerText = isFinished( size );
+
+}
+
+function isFinished( size ){
+    var t = [];
+
+    for( var i = 0 ; i < size ; i++ ){
+        for( j = 0 ; j < size ; j++ ){
+            var cell = getCellByPosition( i+1 , j+1 );
+            t.push( cell.innerText );
+        }
+    }
+
+    return checkRows( t , size );
+}
+
+function checkRows( t , size ){
+    for( var i = 0 ; i < size ; i++){
+        var before = "BAD";
+        var count = 1;
+        for( var j = 0 ; j < size ; j++){
+            var val = t[i*size+j];
+            if( val === before && ( val === "X" || val === "O" )){
+                count++;
+            } else {
+                count = 1;
+            }
+            if( count === winLength ){
+                return true;
+            }
+            before = val;
+        }
+    }
+    return false;
 }
 
 function getCellByPosition( row , col ){
@@ -72,7 +109,7 @@ function createGameCell( row , col , size ){
         + col
         + ','
         + size
-        + ')" ></span>';
+        + ')" > </span>';
 
     return textHTML;
 
