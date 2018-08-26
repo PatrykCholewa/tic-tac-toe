@@ -1,14 +1,18 @@
 var player = 1;
-const winLength = 3;
 
 function injectGame(){
     var size = document.getElementById("game-size-input");
+    var winLength = document.getElementById("game-win-length-input");
     if( !size.checkValidity() ){
-        alert("Invalize size");
+        alert("Invalize size!");
+        return;
+    }
+    if( !winLength.checkValidity() ){
+        alert("Invalid win length!");
         return;
     }
 
-    document.getElementById("game").innerHTML = createGame( size.value );
+    document.getElementById("game").innerHTML = createGame( size.value , winLength.value );
     restart(size);
 }
 
@@ -21,7 +25,7 @@ function restart( size ){
     }
 }
 
-function handleCellClick( row , col , size ){
+function handleCellClick( row , col , size , winLength ){
     var cell = getCellByPosition( row , col );
     var classes = cell.classList;
     if( classes.contains("game-cell-init")){
@@ -37,11 +41,11 @@ function handleCellClick( row , col , size ){
         }
     }
 
-    document.getElementById("preamble").innerText = isFinished( size );
+    document.getElementById("preamble").innerText = isFinished( size , winLength );
 
 }
 
-function isFinished( size ){
+function isFinished( size , winLength ){
     var t = [];
 
     for( var i = 0 ; i < size ; i++ ){
@@ -51,23 +55,23 @@ function isFinished( size ){
         }
     }
 
-    var fin = checkRows( t , size );
+    var fin = checkRows( t , size , winLength );
     if( fin === true ){
         return true;
     }
-    fin = checkColumns( t , size )
+    fin = checkColumns( t , size , winLength )
     if( fin === true ){
         return true;
     }
-    fin = checkAslantTopLeftToBottomRight( t , size );
+    fin = checkAslantTopLeftToBottomRight( t , size , winLength );
     if( fin === true){
         return true;
     }
 
-    return checkAslantBottomLeftToTopRight( t , size );
+    return checkAslantBottomLeftToTopRight( t , size , winLength );
 }
 
-function checkRows( t , size ){
+function checkRows( t , size , winLength ){
     for( var i = 0 ; i < size ; i++){
         var before = "BAD";
         var count = 1;
@@ -87,7 +91,7 @@ function checkRows( t , size ){
     return false;
 }
 
-function checkColumns( t , size ){
+function checkColumns( t , size , winLength ){
     for( var i = 0 ; i < size ; i++){
         var before = "BAD";
         var count = 1;
@@ -107,7 +111,7 @@ function checkColumns( t , size ){
     return false;
 }
 
-function checkAslantTopLeftToBottomRight( t , size ) {
+function checkAslantTopLeftToBottomRight( t , size , winLength ) {
     for( var i = -size + 1 ; i < size ; i++){
         var before = "BAD";
         var count = 1;
@@ -127,7 +131,7 @@ function checkAslantTopLeftToBottomRight( t , size ) {
     return false;
 }
 
-function checkAslantBottomLeftToTopRight( t , size ) {
+function checkAslantBottomLeftToTopRight( t , size , winLength ) {
     for( var i = -size + 1 ; i < size ; i++){
         var before = "BAD";
         var count = 1;
@@ -151,23 +155,23 @@ function getCellByPosition( row , col ){
     return document.getElementById( getCellIdByPosition(row,col) );
 }
 
-function createGame( size ){
+function createGame( size , winLength ){
     var textHTML = '';
 
     for( var i = 1 ; i <= size ; i++ ){
-        textHTML = textHTML + createGameRow( i , size );
+        textHTML = textHTML + createGameRow( i , size , winLength );
     }
 
     return textHTML;
 }
 
-function createGameRow( row , size ){
+function createGameRow( row , size , winLength ){
     var textHTML = '<div id="game-row_'
         + row
         + '" class="game-row">';
 
     for( var i = 1 ; i <= size ; i++ ) {
-        var innerHTML = createGameCell( row , i , size );
+        var innerHTML = createGameCell( row , i , size , winLength );
         textHTML = textHTML + innerHTML;
     }
 
@@ -176,7 +180,7 @@ function createGameRow( row , size ){
     return textHTML;
 }
 
-function createGameCell( row , col , size ){
+function createGameCell( row , col , size , winLength ){
 
     var textHTML = '<span id="'
         + getCellIdByPosition(row,col)
@@ -187,6 +191,8 @@ function createGameCell( row , col , size ){
         + col
         + ','
         + size
+        + ','
+        + winLength
         + ')" >?</span>';
 
     return textHTML;
