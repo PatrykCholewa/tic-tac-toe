@@ -1,5 +1,3 @@
-var player = 1;
-
 function injectGame(){
     var size = document.getElementById("game-size-input");
     var winLength = document.getElementById("game-win-length-input");
@@ -28,16 +26,17 @@ function restart( size ){
 function handleCellClick( row , col , size , winLength ){
     var cell = getCellByPosition( row , col );
     var classes = cell.classList;
+    var player = document.getElementById("player-number");
     if( classes.contains("game-cell-init")){
         classes.remove("game-cell-init");
-        if( player === 1 ){
+        if( player.innerText === "1" ){
             classes.add("game-cell-player1");
             cell.innerText = "X";
-            player = 2;
+            player.innerText = "2";
         } else {
             classes.add("game-cell-player2");
             cell.innerText = "O";
-            player = 1;
+            player.innerText = "1";
         }
     }
 
