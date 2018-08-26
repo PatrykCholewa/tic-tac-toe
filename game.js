@@ -1,3 +1,5 @@
+injectGame();
+
 function injectGame(){
     var size = document.getElementById("game-size-input");
     var winLength = document.getElementById("game-win-length-input");
@@ -11,6 +13,11 @@ function injectGame(){
     }
 
     document.getElementById("game").innerHTML = createGame( size.value , winLength.value );
+
+    var player = document.getElementById("player");
+
+    player.innerHTML = 'Player<label id="player-number" class="player">1</label>';
+
     restart(size);
 }
 
@@ -26,21 +33,26 @@ function restart( size ){
 function handleCellClick( row , col , size , winLength ){
     var cell = getCellByPosition( row , col );
     var classes = cell.classList;
-    var player = document.getElementById("player-number");
+    var playerNumber = document.getElementById("player-number");
     if( classes.contains("game-cell-init")){
         classes.remove("game-cell-init");
-        if( player.innerText === "1" ){
+        if( playerNumber.innerText === "1" ){
             classes.add("game-cell-player1");
             cell.innerText = "X";
-            player.innerText = "2";
+            playerNumber.innerText = "2";
         } else {
             classes.add("game-cell-player2");
             cell.innerText = "O";
-            player.innerText = "1";
+            playerNumber.innerText = "1";
         }
     }
 
-    document.getElementById("preamble").innerText = isFinished( size , winLength );
+    if( isFinished( size , winLength ) ){
+        document.getElementById("player").innerText =
+            'Player '
+            + playerNumber.innerText
+            + ' lost!';
+    }
 
 }
 

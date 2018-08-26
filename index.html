@@ -12,12 +12,7 @@
         Introduction
     </p>
 
-    <h3 class="player">
-        Player
-        <label id="player-number" class="player">1</label>
-    </h3>
-
-    <div class="game-box">
+    <div>
         <div class="game-part">
             <label for="game-size-input">Game size</label>
             <input id="game-size-input"
@@ -39,6 +34,10 @@
         <button id="game-inject-button" onclick="injectGame()">
             Start new game
         </button>
+    </div>
+
+    <div class="game-box">
+        <h3 id="player" class="player"></h3>
         <div id="game" class="game-part"></div>
     </div>
 
