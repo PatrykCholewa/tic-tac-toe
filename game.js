@@ -11,6 +11,10 @@ function injectGame(){
         alert("Invalid win length!");
         return;
     }
+    if( size.value < winLength.value ){
+        alert("Impossible win length!");
+        return;
+    }
 
     document.getElementById("game").innerHTML = createGame( size.value , winLength.value );
 
@@ -18,16 +22,6 @@ function injectGame(){
 
     player.innerHTML = 'Player <label id="player-number" class="player">1</label>';
 
-    restart(size);
-}
-
-function restart( size ){
-    for( var i = 1 ; i <= size ; i++ ){
-        for( var j = 1 ; j <= size ; j++ ){
-            var cell = getCellIdByPosition( i , j );
-            cell.innerText = "?";
-        }
-    }
 }
 
 function handleCellClick( row , col , size , winLength ){
@@ -69,6 +63,7 @@ function finish( playerNumber , size ){
 
 function isFinished( size , winLength ){
     var t = [];
+    var fin = false;
 
     for( var i = 0 ; i < size ; i++ ){
         for( j = 0 ; j < size ; j++ ){
@@ -86,7 +81,7 @@ function isFinished( size , winLength ){
         }
     }
 
-    var fin = checkRows( t , size , winLength );
+    fin = checkRows( t , size , winLength );
     if( fin === true ){
         return true;
     }
@@ -108,7 +103,7 @@ function checkRows( t , size , winLength ){
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[i*size+j];
-            if( val === before && val !== 0 ){
+            if( val === before && (val === 1 || val === 2) ){
                 count++;
             } else {
                 count = 1;
@@ -128,7 +123,7 @@ function checkColumns( t , size , winLength ){
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[j*size+i];
-            if( val === before && val !== 0 ){
+            if( val === before && (val === 1 || val === 2) ){
                 count++;
             } else {
                 count = 1;
@@ -148,7 +143,7 @@ function checkAslantTopLeftToBottomRight( t , size , winLength ) {
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[i + j*size+j];
-            if( val === before && val !== 0 ){
+            if( val === before && (val === 1 || val === 2) ){
                 count++;
             } else {
                 count = 1;
@@ -167,8 +162,8 @@ function checkAslantBottomLeftToTopRight( t , size , winLength ) {
         var before = 0;
         var count = 1;
         for( var j = 0 ; j < size ; j++){
-            var val = t[i + j*size+(size-j-1)];
-            if( val === before && val !== 0 ){
+            var val = t[(i-j)*size+j];
+            if( val === before && (val === 1 || val === 2) ){
                 count++;
             } else {
                 count = 1;
