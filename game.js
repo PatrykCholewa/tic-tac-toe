@@ -32,11 +32,11 @@ function handleCellClick( row , col , size , winLength ){
         classes.remove("game-cell-init");
         if( playerNumber.innerText === "1" ){
             classes.add("game-cell-player1");
-            cell.innerHTML = '<img src="ico/x.ico">'
+            cell.innerHTML = '<img src="img/x.ico">'
             playerNumber.innerText = "2";
         } else {
             classes.add("game-cell-player2");
-            cell.innerHTML = '<img src="ico/o.ico">'
+            cell.innerHTML = '<img src="img/o.ico">'
             playerNumber.innerText = "1";
         }
     }
@@ -219,7 +219,7 @@ function createGameCell( row , col , size , winLength ){
         + size
         + ','
         + winLength
-        + ')" ><img src="ico/mark.ico"></span>';
+        + ')" ><img src="img/mark.ico"></span>';
 
     return textHTML;
 

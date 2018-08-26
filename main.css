@@ -3,30 +3,32 @@ body{
     align-items: center;
     align-content: center;
     align-self: center;
-    background: aquamarine;
+    background: aquamarine url("img/background.png");
     margin-left: 20%;
     margin-right: 20%;
     width: 60%;
 }
 
 #main-content{
-    background: darkseagreen;
+    background: darkseagreen url("img/content_background.png");
     border: brown solid 5px;
+    border-radius: 20px;
 }
 
 #title {
-    color: #ff8826;
+    color: #6f2802;
     font-family: Algerian, serif;
     font-size: 28px;
 }
 
 #game-creator{
     text-align: right;
-    font-family: Rockwell, fantasy;
+    font-family: Rockwell, bold, fantasy;
+    font-size: 20px;
 }
 
 .game-creator-part{
-    margin-right: 20%;
+    margin-right: 25%;
     padding-bottom: 5px;
 }
 
@@ -36,8 +38,9 @@ body{
 }
 
 .game-box{
-    background: darkgrey;
+    background: darkgrey url("img/game_background.png");
     border: 3px solid black;
+    border-radius: 15px;
     margin: 5px;
     padding-bottom: 30px;
 }
@@ -45,6 +48,7 @@ body{
 #player{
     font-family: Jokerman, bold, monospace;
     font-size: 18px;
+    color: #1a0a26;
 }
 
 .game-cell{
