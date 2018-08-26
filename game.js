@@ -48,12 +48,23 @@ function handleCellClick( row , col , size , winLength ){
     }
 
     if( isFinished( size , winLength ) ){
-        document.getElementById("player").innerText =
-            'Player '
-            + playerNumber.innerText
-            + ' lost!';
+        finish( playerNumber , size );
     }
 
+}
+
+function finish( playerNumber , size ){
+    document.getElementById("player").innerText =
+        'Player '
+        + playerNumber.innerText
+        + ' lost!';
+
+    for( var i = 1 ; i <= size ; i++ ){
+        for( var j = 1 ; j <= size ; j++ ){
+            var cell = getCellByPosition( i , j );
+            cell.onclick = null;
+        }
+    }
 }
 
 function isFinished( size , winLength ){

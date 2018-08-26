@@ -42,6 +42,11 @@ body{
     padding-bottom: 30px;
 }
 
+#player{
+    font-family: Jokerman, bold, monospace;
+    font-size: 18px;
+}
+
 .game-cell{
     padding: 5px;
     border: solid black 1px;
