@@ -23,6 +23,8 @@ body{
 .game-cell{
     padding: 5px;
     border: solid black 1px;
+    margin: 5px;
+    font-family: Wingdings bold, fantasy;
 }
 
 .game-cell-init{

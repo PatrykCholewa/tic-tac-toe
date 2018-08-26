@@ -1,9 +1,14 @@
 var player = 1;
 const winLength = 3;
-injectGame(3);
 
-function injectGame( size ){
-    document.getElementById("game").innerHTML = createGame( size );
+function injectGame(){
+    var size = document.getElementById("game-size-input");
+    if( !size.checkValidity() ){
+        alert("Invalize size");
+        return;
+    }
+
+    document.getElementById("game").innerHTML = createGame( size.value );
     restart(size);
 }
 
@@ -11,7 +16,7 @@ function restart( size ){
     for( var i = 1 ; i <= size ; i++ ){
         for( var j = 1 ; j <= size ; j++ ){
             var cell = getCellIdByPosition( i , j );
-            cell.innerText = " ";
+            cell.innerText = "?";
         }
     }
 }
@@ -46,7 +51,20 @@ function isFinished( size ){
         }
     }
 
-    return checkRows( t , size );
+    var fin = checkRows( t , size );
+    if( fin === true ){
+        return true;
+    }
+    fin = checkColumns( t , size )
+    if( fin === true ){
+        return true;
+    }
+    fin = checkAslantTopLeftToBottomRight( t , size );
+    if( fin === true){
+        return true;
+    }
+
+    return checkAslantBottomLeftToTopRight( t , size );
 }
 
 function checkRows( t , size ){
@@ -55,6 +73,66 @@ function checkRows( t , size ){
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[i*size+j];
+            if( val === before && ( val === "X" || val === "O" )){
+                count++;
+            } else {
+                count = 1;
+            }
+            if( count === winLength ){
+                return true;
+            }
+            before = val;
+        }
+    }
+    return false;
+}
+
+function checkColumns( t , size ){
+    for( var i = 0 ; i < size ; i++){
+        var before = "BAD";
+        var count = 1;
+        for( var j = 0 ; j < size ; j++){
+            var val = t[j*size+i];
+            if( val === before && ( val === "X" || val === "O" )){
+                count++;
+            } else {
+                count = 1;
+            }
+            if( count === winLength ){
+                return true;
+            }
+            before = val;
+        }
+    }
+    return false;
+}
+
+function checkAslantTopLeftToBottomRight( t , size ) {
+    for( var i = -size + 1 ; i < size ; i++){
+        var before = "BAD";
+        var count = 1;
+        for( var j = 0 ; j < size ; j++){
+            var val = t[i + j*size+j];
+            if( val === before && ( val === "X" || val === "O" )){
+                count++;
+            } else {
+                count = 1;
+            }
+            if( count === winLength ){
+                return true;
+            }
+            before = val;
+        }
+    }
+    return false;
+}
+
+function checkAslantBottomLeftToTopRight( t , size ) {
+    for( var i = -size + 1 ; i < size ; i++){
+        var before = "BAD";
+        var count = 1;
+        for( var j = 0 ; j < size ; j++){
+            var val = t[i + j*size+(size-j-1)];
             if( val === before && ( val === "X" || val === "O" )){
                 count++;
             } else {
@@ -109,7 +187,7 @@ function createGameCell( row , col , size ){
         + col
         + ','
         + size
-        + ')" > </span>';
+        + ')" >?</span>';
 
     return textHTML;
 
@@ -118,4 +196,3 @@ function createGameCell( row , col , size ){
 function getCellIdByPosition( row , col ){
     return "game-cell_" + row + col;
 }
-

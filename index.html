@@ -13,6 +13,15 @@
     </p>
 
     <div class="game-box">
+        <label for="game-size-input">Game size</label>
+        <input id="game-size-input"
+               value="3"
+               type="number"
+               min="3"
+               max="60"
+               required >
+        <button id="game-inject-button" onclick="injectGame()">
+        </button>
         <div id="game" class="game-part"></div>
     </div>
 
