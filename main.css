@@ -4,20 +4,42 @@ body{
     align-content: center;
     align-self: center;
     background: aquamarine;
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 60%;
 }
 
-#preamble {
-    color: brown;
+#main-content{
+    background: darkseagreen;
+    border: brown solid 5px;
+}
+
+#title {
+    color: #ff8826;
     font-family: Algerian, serif;
-    font-size: 21px;
+    font-size: 28px;
+}
+
+#game-creator{
+    text-align: right;
+    font-family: Rockwell, fantasy;
+}
+
+.game-creator-part{
+    margin-right: 20%;
+    padding-bottom: 5px;
+}
+
+.game-input-box{
+    text-align: right;
+    width: 20%;
 }
 
 .game-box{
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 20%;
     background: darkgrey;
     border: 3px solid black;
+    margin: 5px;
+    padding-bottom: 30px;
 }
 
 .game-cell{
@@ -33,19 +55,19 @@ body{
 
 .game-cell-player1{
     background: brown;
+    color: yellow;
 }
 
 .game-cell-player2{
     background: aqua;
+    color: red;
 }
 
 .game-row{
     margin-top: 5px;
-}
-
-#game-topbar-img{
-    alignment: center;
-    margin-top: 3px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
 
 

@@ -8,37 +8,43 @@
 </head>
 <body>
 
-    <p id=preamble>
-        Introduction
-    </p>
+    <div id="main-content">
+        <h1 id=title>
+            Rings and crosses
+        </h1>
 
-    <div>
-        <div class="game-part">
-            <label for="game-size-input">Game size</label>
-            <input id="game-size-input"
-                   value="3"
-                   type="number"
-                   min="3"
-                   max="60"
-                   required >
+        <div id="game-creator">
+            <div class="game-creator-part">
+                <label for="game-size-input">Game size</label>
+                <input id="game-size-input"
+                       class="game-input-box"
+                       value="3"
+                       type="number"
+                       min="3"
+                       max="25"
+                       required >
+            </div>
+            <div class="game-creator-part">
+                <label for="game-win-length-input">Required line length for winning</label>
+                <input id="game-win-length-input"
+                       class="game-input-box"
+                       value="3"
+                       type="number"
+                       min="3"
+                       max="5"
+                       required >
+            </div>
+            <button id="game-inject-button"
+                    class="game-creator-part"
+                    onclick="injectGame()">
+                Create a new game
+            </button>
         </div>
-        <div class="game-part">
-            <label for="game-win-length-input">Required line length for winning</label>
-            <input id="game-win-length-input"
-                   value="3"
-                   type="number"
-                   min="3"
-                   max="5"
-                   required >
-        </div>
-        <button id="game-inject-button" onclick="injectGame()">
-            Start new game
-        </button>
-    </div>
 
-    <div class="game-box">
-        <h3 id="player" class="player"></h3>
-        <div id="game" class="game-part"></div>
+        <div class="game-box">
+            <h3 id="player" class="player"></h3>
+            <div id="game" class="game-part"></div>
+        </div>
     </div>
 
     <script src="game.js"></script>
