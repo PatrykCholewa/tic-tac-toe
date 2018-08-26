@@ -16,7 +16,7 @@ function injectGame(){
 
     var player = document.getElementById("player");
 
-    player.innerHTML = 'Player<label id="player-number" class="player">1</label>';
+    player.innerHTML = 'Player <label id="player-number" class="player">1</label>';
 
     restart(size);
 }
@@ -38,11 +38,11 @@ function handleCellClick( row , col , size , winLength ){
         classes.remove("game-cell-init");
         if( playerNumber.innerText === "1" ){
             classes.add("game-cell-player1");
-            cell.innerText = "X";
+            cell.innerHTML = '<img src="ico/x.ico">'
             playerNumber.innerText = "2";
         } else {
             classes.add("game-cell-player2");
-            cell.innerText = "O";
+            cell.innerHTML = '<img src="ico/o.ico">'
             playerNumber.innerText = "1";
         }
     }
@@ -56,8 +56,8 @@ function handleCellClick( row , col , size , winLength ){
 function finish( playerNumber , size ){
     document.getElementById("player").innerText =
         'Player '
-        + playerNumber.innerText
-        + ' lost!';
+        + (playerNumber.innerText %2 + 1)
+        + ' won!';
 
     for( var i = 1 ; i <= size ; i++ ){
         for( var j = 1 ; j <= size ; j++ ){
@@ -73,7 +73,16 @@ function isFinished( size , winLength ){
     for( var i = 0 ; i < size ; i++ ){
         for( j = 0 ; j < size ; j++ ){
             var cell = getCellByPosition( i+1 , j+1 );
-            t.push( cell.innerText );
+            var classes = cell.classList;
+            if( classes.contains("game-cell-init")) {
+                t.push(0);
+            }
+            if( classes.contains("game-cell-player1")) {
+                t.push(1);
+            }
+            if( classes.contains("game-cell-player2")){
+                t.push(2);
+            }
         }
     }
 
@@ -95,11 +104,11 @@ function isFinished( size , winLength ){
 
 function checkRows( t , size , winLength ){
     for( var i = 0 ; i < size ; i++){
-        var before = "BAD";
+        var before = 0;
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[i*size+j];
-            if( val === before && ( val === "X" || val === "O" )){
+            if( val === before && val !== 0 ){
                 count++;
             } else {
                 count = 1;
@@ -115,11 +124,11 @@ function checkRows( t , size , winLength ){
 
 function checkColumns( t , size , winLength ){
     for( var i = 0 ; i < size ; i++){
-        var before = "BAD";
+        var before = 0;
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[j*size+i];
-            if( val === before && ( val === "X" || val === "O" )){
+            if( val === before && val !== 0 ){
                 count++;
             } else {
                 count = 1;
@@ -135,11 +144,11 @@ function checkColumns( t , size , winLength ){
 
 function checkAslantTopLeftToBottomRight( t , size , winLength ) {
     for( var i = -size + 1 ; i < size ; i++){
-        var before = "BAD";
+        var before = 0;
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[i + j*size+j];
-            if( val === before && ( val === "X" || val === "O" )){
+            if( val === before && val !== 0 ){
                 count++;
             } else {
                 count = 1;
@@ -154,12 +163,12 @@ function checkAslantTopLeftToBottomRight( t , size , winLength ) {
 }
 
 function checkAslantBottomLeftToTopRight( t , size , winLength ) {
-    for( var i = -size + 1 ; i < size ; i++){
-        var before = "BAD";
+    for( var i = 0 ; i < 2*size-1 ; i++){
+        var before = 0;
         var count = 1;
         for( var j = 0 ; j < size ; j++){
             var val = t[i + j*size+(size-j-1)];
-            if( val === before && ( val === "X" || val === "O" )){
+            if( val === before && val !== 0 ){
                 count++;
             } else {
                 count = 1;
@@ -215,7 +224,7 @@ function createGameCell( row , col , size , winLength ){
         + size
         + ','
         + winLength
-        + ')" >?</span>';
+        + ')" ><img src="ico/mark.ico"></span>';
 
     return textHTML;
 
