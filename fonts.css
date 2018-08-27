@@ -2,3 +2,13 @@
     font-family: Schools-out;
     src: url("fonts/schools-out/SchoolsOut.otf") format("opentype");
 }
+
+@font-face {
+    font-family: Action-Jackson;
+    src: url("fonts/action-jackson/actionj.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: Gruenewald-va;
+    src: url("fonts/gruenewald-va/GruenewaldVAnormal.ttf") format("truetype");
+}
