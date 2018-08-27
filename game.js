@@ -28,23 +28,35 @@ function handleCellClick( row , col , size , winLength ){
     const cell = getCellByPosition( row , col );
     const classes = cell.classList;
     const playerNumber = document.getElementById("player-number");
+    const playerClasses = document.getElementById("player").classList;
+
     if( classes.contains("game-cell-init")){
         classes.remove("game-cell-init");
         if( playerNumber.innerText === "1" ){
             classes.add("game-cell-player1");
             cell.innerHTML = '<img src="img/x.ico">'
             playerNumber.innerText = "2";
+
+            if( isFinished( size , winLength ) ){
+                finish( playerNumber , size );
+            } else {
+                playerClasses.remove("player1");
+                playerClasses.add("player2");
+            }
+
         } else {
             classes.add("game-cell-player2");
             cell.innerHTML = '<img src="img/o.ico">'
             playerNumber.innerText = "1";
+
+            if( isFinished( size , winLength ) ){
+                finish( playerNumber , size );
+            } else {
+                playerClasses.remove("player2");
+                playerClasses.add("player1");
+            }
         }
     }
-
-    if( isFinished( size , winLength ) ){
-        finish( playerNumber , size );
-    }
-
 }
 
 function finish( playerNumber , size ){

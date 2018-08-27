@@ -10,7 +10,7 @@ body{
 }
 
 #main-content{
-    background: darkseagreen url("img/content_background.png");
+    background: linear-gradient(180deg, aqua 0%,brown 60%);
     border: brown solid 5px;
     border-radius: 20px;
 }
@@ -19,17 +19,27 @@ body{
     color: #6f2802;
     font-family: Algerian, serif;
     font-size: 28px;
+    text-effect: outline;
+    text-transform: uppercase;
+    width: 85%;
+}
+
+#game-inject-button{
+    margin-top: 3%;
+    margin-bottom: 2%;
+    border-radius: 15%;
+    margin-right: 0;
 }
 
 #game-creator{
-    text-align: right;
-    font-family: Rockwell, bold, fantasy;
-    font-size: 20px;
+    padding-bottom: 5px;
 }
 
 .game-creator-part{
-    margin-right: 25%;
-    padding-bottom: 5px;
+    margin-right: 5%;
+    font-family: Schools-out, bold, serif;
+    text-align: right;
+    font-size: 27px;
 }
 
 .game-input-box{
@@ -48,7 +58,16 @@ body{
 #player{
     font-family: Jokerman, bold, monospace;
     font-size: 18px;
-    color: #1a0a26;
+}
+
+.player1{
+    color: yellow;
+    text-shadow: -3px 0 brown, 0 3px brown, 3px 0 brown, 0 -3px brown;
+}
+
+.player2{
+    color: red;
+    text-shadow: -3px 0 aqua, 0 3px aqua, 3px 0 aqua, 0 -3px aqua;
 }
 
 .game-cell{
