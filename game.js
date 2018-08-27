@@ -1,8 +1,8 @@
 injectGame();
 
 function injectGame(){
-    var size = document.getElementById("game-size-input");
-    var winLength = document.getElementById("game-win-length-input");
+    const size = document.getElementById("game-size-input");
+    const winLength = document.getElementById("game-win-length-input");
     if( !size.checkValidity() ){
         alert("Invalize size!");
         return;
@@ -11,23 +11,23 @@ function injectGame(){
         alert("Invalid win length!");
         return;
     }
-    if( size.value < winLength.value ){
+    if( size.value.valueOf() < winLength.value.valueOf() ){
         alert("Impossible win length!");
         return;
     }
 
     document.getElementById("game").innerHTML = createGame( size.value , winLength.value );
 
-    var player = document.getElementById("player");
+    const player = document.getElementById("player");
 
     player.innerHTML = 'Player <label id="player-number" class="player">1</label>';
 
 }
 
 function handleCellClick( row , col , size , winLength ){
-    var cell = getCellByPosition( row , col );
-    var classes = cell.classList;
-    var playerNumber = document.getElementById("player-number");
+    const cell = getCellByPosition( row , col );
+    const classes = cell.classList;
+    const playerNumber = document.getElementById("player-number");
     if( classes.contains("game-cell-init")){
         classes.remove("game-cell-init");
         if( playerNumber.innerText === "1" ){
@@ -53,39 +53,44 @@ function finish( playerNumber , size ){
         + (playerNumber.innerText %2 + 1)
         + ' won!';
 
-    for( var i = 1 ; i <= size ; i++ ){
-        for( var j = 1 ; j <= size ; j++ ){
-            var cell = getCellByPosition( i , j );
+    for( let i = 1 ; i <= size ; i++ ){
+        for( let j = 1 ; j <= size ; j++ ){
+            const cell = getCellByPosition( i , j );
             cell.onclick = null;
         }
     }
 }
 
 function isFinished( size , winLength ){
-    var t = [];
-    var fin = false;
+    const t = [];
+    let fin = false;
 
-    for( var i = 0 ; i < size ; i++ ){
-        for( j = 0 ; j < size ; j++ ){
-            var cell = getCellByPosition( i+1 , j+1 );
-            var classes = cell.classList;
+    for( let i = 0 ; i < size ; i++ ){
+        const t2 = [];
+
+        for( let j = 0 ; j < size ; j++ ){
+            const cell = getCellByPosition( i+1 , j+1 );
+            const classes = cell.classList;
             if( classes.contains("game-cell-init")) {
-                t.push(0);
+                t2.push(0);
             }
             if( classes.contains("game-cell-player1")) {
-                t.push(1);
+                t2.push(1);
             }
             if( classes.contains("game-cell-player2")){
-                t.push(2);
+                t2.push(2);
             }
         }
+
+        t.push(t2);
+
     }
 
     fin = checkRows( t , size , winLength );
     if( fin === true ){
         return true;
     }
-    fin = checkColumns( t , size , winLength )
+    fin = checkColumns( t , size , winLength );
     if( fin === true ){
         return true;
     }
@@ -98,11 +103,11 @@ function isFinished( size , winLength ){
 }
 
 function checkRows( t , size , winLength ){
-    for( var i = 0 ; i < size ; i++){
-        var before = 0;
-        var count = 1;
-        for( var j = 0 ; j < size ; j++){
-            var val = t[i*size+j];
+    for( let i = 0 ; i < size ; i++){
+        let before = 0;
+        let count = 1;
+        for( let j = 0 ; j < size ; j++){
+            const val = t[i][j];
             if( val === before && (val === 1 || val === 2) ){
                 count++;
             } else {
@@ -118,11 +123,11 @@ function checkRows( t , size , winLength ){
 }
 
 function checkColumns( t , size , winLength ){
-    for( var i = 0 ; i < size ; i++){
-        var before = 0;
-        var count = 1;
-        for( var j = 0 ; j < size ; j++){
-            var val = t[j*size+i];
+    for( let i = 0 ; i < size ; i++){
+        let before = 0;
+        let count = 1;
+        for( let j = 0 ; j < size ; j++){
+            const val = t[j][i];
             if( val === before && (val === 1 || val === 2) ){
                 count++;
             } else {
@@ -138,11 +143,11 @@ function checkColumns( t , size , winLength ){
 }
 
 function checkAslantTopLeftToBottomRight( t , size , winLength ) {
-    for( var i = -size + 1 ; i < size ; i++){
-        var before = 0;
-        var count = 1;
-        for( var j = 0 ; j < size ; j++){
-            var val = t[i + j*size+j];
+    for( let i = -size + 1 ; i < size ; i++){
+        let before = 0;
+        let count = 1;
+        for( let j = 0 ; j < size ; j++){
+            const val = t[j][i+j];
             if( val === before && (val === 1 || val === 2) ){
                 count++;
             } else {
@@ -158,20 +163,32 @@ function checkAslantTopLeftToBottomRight( t , size , winLength ) {
 }
 
 function checkAslantBottomLeftToTopRight( t , size , winLength ) {
-    for( var i = 0 ; i < 2*size-1 ; i++){
-        var before = 0;
-        var count = 1;
-        for( var j = 0 ; j < size ; j++){
-            var val = t[(i-j)*size+j];
-            if( val === before && (val === 1 || val === 2) ){
-                count++;
-            } else {
+    for( let i = 0 ; i < 2*size-1 ; i++){
+        let before = 0;
+        let count = 1;
+        for( let j = 0 ; j < size ; j++){
+            const subtable = t[i-j];
+
+            if( subtable !== undefined ) {
+                const val = subtable[j];
+
+                if (val === before && (val === 1 || val === 2)) {
+                    count++;
+                } else {
+                    count = 1;
+                }
+
+                if (count === winLength) {
+                    return true;
+                }
+
+                before = val;
+
+            } else{
                 count = 1;
+                before = 0;
             }
-            if( count === winLength ){
-                return true;
-            }
-            before = val;
+
         }
     }
     return false;
@@ -182,7 +199,7 @@ function getCellByPosition( row , col ){
 }
 
 function createGame( size , winLength ){
-    var textHTML = '';
+    let textHTML = '';
 
     for( var i = 1 ; i <= size ; i++ ){
         textHTML = textHTML + createGameRow( i , size , winLength );
@@ -192,12 +209,12 @@ function createGame( size , winLength ){
 }
 
 function createGameRow( row , size , winLength ){
-    var textHTML = '<div id="game-row_'
+    let textHTML = '<div id="game-row_'
         + row
         + '" class="game-row">';
 
-    for( var i = 1 ; i <= size ; i++ ) {
-        var innerHTML = createGameCell( row , i , size , winLength );
+    for( let i = 1 ; i <= size ; i++ ) {
+        let innerHTML = createGameCell( row , i , size , winLength );
         textHTML = textHTML + innerHTML;
     }
 
@@ -208,7 +225,7 @@ function createGameRow( row , size , winLength ){
 
 function createGameCell( row , col , size , winLength ){
 
-    var textHTML = '<span id="'
+    const textHTML = '<span id="'
         + getCellIdByPosition(row,col)
         + '" class="game-cell game-cell-init"'
         + 'onclick="handleCellClick('
