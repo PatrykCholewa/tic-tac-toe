@@ -11,7 +11,7 @@ function injectGame(){
         alert("Invalid win length!");
         return;
     }
-    if( size.value.valueOf() < winLength.value.valueOf() ){
+    if( Number(size.value) < Number(winLength.value) ){
         alert("Impossible win length!");
         return;
     }
